@@ -41,7 +41,7 @@ import java.io.InputStream;
 public interface InputStreamSource {
 
 	/**
-	 * Return an {@link InputStream} for the content of an underlying resource.
+	 * Return an {@link InputStream} for the content of an underlying(潜在的) resource.
 	 * <p>It is expected that each call creates a <i>fresh</i> stream.
 	 * <p>This requirement is particularly important when you consider an API such
 	 * as JavaMail, which needs to be able to read the stream multiple times when

@@ -274,11 +274,19 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
 		return getResourceLoader().getResource(location);
 	}
 
+	/**
+	 * 获取多个资源
+	 * @param locationPattern the location pattern to resolve
+	 * @return
+	 * @throws IOException
+	 */
 	@Override
 	public Resource[] getResources(String locationPattern) throws IOException {
 		Assert.notNull(locationPattern, "Location pattern must not be null");
+		//如果匹配路径是以classpath*:开头的
 		if (locationPattern.startsWith(CLASSPATH_ALL_URL_PREFIX)) {
 			// a class path resource (multiple resources for same name possible)
+			//如果包含通配符 *  ？
 			if (getPathMatcher().isPattern(locationPattern.substring(CLASSPATH_ALL_URL_PREFIX.length()))) {
 				// a class path resource pattern
 				return findPathMatchingResources(locationPattern);
@@ -478,6 +486,7 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
 	}
 
 	/**
+	 * 获取所有包含了通配符的资源
 	 * Find all resources that match the given location pattern via the
 	 * Ant-style PathMatcher. Supports resources in jar files and zip files
 	 * and in the file system.

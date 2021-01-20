@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group 'com.harvey.spring'
+version '1.0.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    compile(project(":spring-beans"))
+//    compile(project(":spring-core"))
+    compile(project(":spring-context"))
+//    compile(project(":logback-classic"))
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

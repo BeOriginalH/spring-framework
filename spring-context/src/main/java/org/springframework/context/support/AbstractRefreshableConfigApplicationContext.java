@@ -70,12 +70,15 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	}
 
 	/**
+	 * 主要是将传入的配置文件的路径进行解析，将占位符用真实的数据进行替换，最终返回真实的路径名称
+	 *
 	 * Set the config locations for this application context.
 	 * <p>If not set, the implementation may use a default as appropriate.
 	 */
 	public void setConfigLocations(@Nullable String... locations) {
 		if (locations != null) {
 			Assert.noNullElements(locations, "Config locations must not be null");
+
 			this.configLocations = new String[locations.length];
 			for (int i = 0; i < locations.length; i++) {
 				this.configLocations[i] = resolvePath(locations[i]).trim();

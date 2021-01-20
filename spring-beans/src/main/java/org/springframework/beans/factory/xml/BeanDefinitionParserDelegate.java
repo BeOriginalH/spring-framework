@@ -16,22 +16,8 @@
 
 package org.springframework.beans.factory.xml;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import org.springframework.beans.BeanMetadataAttribute;
 import org.springframework.beans.BeanMetadataAttributeAccessor;
 import org.springframework.beans.PropertyValue;
@@ -66,6 +52,19 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.PatternMatchUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.util.xml.DomUtils;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * Stateful delegate class used to parse XML bean definitions.
@@ -430,6 +429,7 @@ public class BeanDefinitionParserDelegate {
 			}
 		}
 
+		//检查重复
 		if (containingBean == null) {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
@@ -512,12 +512,18 @@ public class BeanDefinitionParserDelegate {
 		}
 
 		try {
+			//创建GenericBeanDefinition对象
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
 
+			//解析bean标签的属性，并将解析出阿里的属性设置到BeanDefinition中
 			parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);
+			//获取描述标签
 			bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));
 
+			//解析meta标签
 			parseMetaElements(ele, bd);
+
+			//解析lookup-method标签
 			parseLookupOverrideSubElements(ele, bd.getMethodOverrides());
 			parseReplacedMethodSubElements(ele, bd.getMethodOverrides());
 

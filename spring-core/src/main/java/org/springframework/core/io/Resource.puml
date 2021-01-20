@@ -1,0 +1,40 @@
+@startuml
+
+interface InputStreamSource
+interface Resource
+class EncodeResource
+
+InputStreamSource <|-- Resource
+InputStreamSource <|-- EncodeResource
+
+
+interface ContextResource
+interface WritableResource
+abstract class AbstractResource
+
+Resource <|-- AbstractResource
+Resource <|-- ContextResource
+Resource <|-- WritableResource
+
+class FileSystemResource
+class ByteArrayResource
+class PathResource
+abstract  class AbstractFileResolvingResource
+class InputStreamResource
+
+AbstractResource <|-- FileSystemResource
+AbstractResource <|-- PathResource
+AbstractResource <|-- ByteArrayResource
+AbstractResource <|-- AbstractFileResolvingResource
+AbstractResource <|-- InputStreamResource
+
+class UrlResource
+class ClassPathResource
+
+AbstractFileResolvingResource <|-- UrlResource
+AbstractFileResolvingResource <|-- ClassPathResource
+
+class FileUrlResource
+
+UrlResource <|-- FileUrlResource
+@enduml
