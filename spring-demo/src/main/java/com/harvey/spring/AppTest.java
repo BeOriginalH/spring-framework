@@ -1,7 +1,5 @@
 package com.harvey.spring;
 
-import com.harvey.spring.bean.Student;
-import com.harvey.spring.bean.TestBean;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -29,6 +27,13 @@ public class AppTest {
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("placeholder/test-spring.xml");
 		Student student = applicationContext.getBean(Student.class);
 		System.out.println(student.getName());
+	}
+
+	@Test
+	public void test3(){
+
+		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("placeholder/test-spring.xml");
+
 	}
 
 

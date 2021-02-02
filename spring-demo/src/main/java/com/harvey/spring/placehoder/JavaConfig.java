@@ -1,4 +1,4 @@
-package com.harvey.spring.bean.placehoder;
+package com.harvey.spring.placehoder;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

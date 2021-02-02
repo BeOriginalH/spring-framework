@@ -9,7 +9,7 @@
 	   http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-	<bean id="testBean" class="com.harvey.spring.TestBean">
+	<bean id="testBean" class="com.harvey.spring.bean.SimpleBean">
 		<property name="age" value="10"/>
 		<property name="name" value="xiaohu"/>
 	</bean>

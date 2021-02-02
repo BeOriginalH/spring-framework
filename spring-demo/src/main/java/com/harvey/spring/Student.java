@@ -1,4 +1,4 @@
-package com.harvey.spring.bean;
+package com.harvey.spring;
 
 /**
  * @author harvey
