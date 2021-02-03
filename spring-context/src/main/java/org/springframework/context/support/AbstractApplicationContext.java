@@ -573,9 +573,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
                 postProcessBeanFactory(beanFactory);
 
                 // Invoke factory processors registered as beans in the context.
+
+				//将factory processors注册到上下文中，主要是执行BeanFactoryProcessor的逻辑
                 invokeBeanFactoryPostProcessors(beanFactory);
 
                 // Register bean processors that intercept bean creation.
+
+				//将BeanPostProcessor注册到BeanFactory中
                 registerBeanPostProcessors(beanFactory);
 
                 // Initialize message source for this context.
@@ -706,9 +710,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
      */
     protected void prepareBeanFactory(ConfigurableListableBeanFactory beanFactory) {
         // Tell the internal bean factory to use the context's class loader etc.
+
+		//设置类加载器
         beanFactory.setBeanClassLoader(getClassLoader());
+        //设置spel表达式解析器
         beanFactory.setBeanExpressionResolver(
                 new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
+        //设置propertyEditor注册器
         beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
         // Configure the bean factory with context callbacks.
@@ -768,6 +776,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
      * Must be called before singleton instantiation.
      */
     protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
+
+    	//将BeanFactoryPostProcessor的处理交给PostProcessorRegistrationDelegate
         PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory,
                 getBeanFactoryPostProcessors());
 

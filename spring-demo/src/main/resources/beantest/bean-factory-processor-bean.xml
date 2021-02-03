@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="student" class="com.harvey.spring.processor.Student"/>
+
+	<bean id="modifyStudentNameBeanFactoryPostProcessor"
+		  class="com.harvey.spring.processor.ModifyStudentNameBeanFactoryPostProcessor">
+		<property name="order" value="2"/>
+	</bean>
+
+	<bean id="studentBeanDefinitionRegistryPostProcessor"
+		  class="com.harvey.spring.processor.StudentBeanDefinitionRegistryPostProcessor">
+		<property name="order" value="2"/>
+	</bean>
+
+	<bean id="modifyStudentAgeBeanFactoryPostProcessor"
+		  class="com.harvey.spring.processor.ModifyStudentAgeBeanFactoryPostProcessor">
+		<property name="order" value="1"/>
+	</bean>
+
+
+</beans>
