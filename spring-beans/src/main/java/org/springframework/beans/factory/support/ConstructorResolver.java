@@ -377,20 +377,31 @@ class ConstructorResolver {
 	public BeanWrapper instantiateUsingFactoryMethod(
 			String beanName, RootBeanDefinition mbd, @Nullable Object[] explicitArgs) {
 
+		//初始化bean的包装对象
 		BeanWrapperImpl bw = new BeanWrapperImpl();
 		this.beanFactory.initBeanWrapper(bw);
 
 		Object factoryBean;
 		Class<?> factoryClass;
+
+		//标识是使用工厂类的工厂方法创建还是直接使用静态方法创建
 		boolean isStatic;
 
 		String factoryBeanName = mbd.getFactoryBeanName();
+
+		//如果指定了factory-bean，则使用指定的工厂进行创建，否则使用静态方法创建
 		if (factoryBeanName != null) {
+
+			//bean不能指定自己为自己的factory-bean
 			if (factoryBeanName.equals(beanName)) {
 				throw new BeanDefinitionStoreException(mbd.getResourceDescription(), beanName,
 						"factory-bean reference points back to the same bean definition");
 			}
+
+			//从工厂中获取factory-bean指定的bean，如果没有，则先创建
 			factoryBean = this.beanFactory.getBean(factoryBeanName);
+
+			//如果bean已经存在bean工厂中并且是单例的，则抛出异常
 			if (mbd.isSingleton() && this.beanFactory.containsSingleton(beanName)) {
 				throw new ImplicitlyAppearedSingletonException();
 			}
@@ -398,6 +409,7 @@ class ConstructorResolver {
 			isStatic = false;
 		}
 		else {
+			//静态方法创建的方式依赖bean自身的class对象，所以需要使用bean的class作为factorybean
 			// It's a static factory method on the bean class.
 			if (!mbd.hasBeanClass()) {
 				throw new BeanDefinitionStoreException(mbd.getResourceDescription(), beanName,
@@ -410,8 +422,11 @@ class ConstructorResolver {
 
 		Method factoryMethodToUse = null;
 		ArgumentsHolder argsHolderToUse = null;
+
+		//参数
 		Object[] argsToUse = null;
 
+		//如果是传入了参数，则使用传入的参数,否则再从构造器中获取
 		if (explicitArgs != null) {
 			argsToUse = explicitArgs;
 		}
@@ -432,6 +447,7 @@ class ConstructorResolver {
 			}
 		}
 
+		//如果没有定位到需要使用来创建对象的方法和参数，则加载类
 		if (factoryMethodToUse == null || argsToUse == null) {
 			// Need to determine the factory method...
 			// Try all methods with this name to see if they match the given arguments.
@@ -446,6 +462,7 @@ class ConstructorResolver {
 					candidateList = Collections.singletonList(factoryMethodToUse);
 				}
 			}
+			//遍历解析找到对应的factory-method
 			if (candidateList == null) {
 				candidateList = new ArrayList<>();
 				Method[] rawCandidates = getCandidateMethods(factoryClass, mbd);
@@ -456,6 +473,7 @@ class ConstructorResolver {
 				}
 			}
 
+			//如果没有参数并且没有构造参数
 			if (candidateList.size() == 1 && explicitArgs == null && !mbd.hasConstructorArgumentValues()) {
 				Method uniqueCandidate = candidateList.get(0);
 				if (uniqueCandidate.getParameterCount() == 0) {
@@ -465,6 +483,7 @@ class ConstructorResolver {
 						mbd.constructorArgumentsResolved = true;
 						mbd.resolvedConstructorArguments = EMPTY_ARGS;
 					}
+					//创建对象
 					bw.setBeanInstance(instantiate(beanName, mbd, factoryBean, uniqueCandidate, EMPTY_ARGS));
 					return bw;
 				}
