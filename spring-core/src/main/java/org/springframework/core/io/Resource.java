@@ -14,6 +14,8 @@
 
 package org.springframework.core.io;
 
+import org.springframework.lang.Nullable;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,9 +24,16 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
-import org.springframework.lang.Nullable;
-
 /**
+ *
+ * Spring中对所有内部能使用到的资源的抽象，包括file、classpath、url等。
+ *
+ * 主要提供几类方法：
+ * 1、判断资源：资源是否存在、是否处理打开状态、是否可读
+ * 2、各种资源之间相互转换
+ * 3、获取文件名称
+ *
+ *
  * Interface for a resource descriptor that abstracts from the actual type of underlying resource,
  * such as a file or class path resource.
  *

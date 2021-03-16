@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="97.0">org.springframework.beans.factory.BeanClassLoaderAware</node>
+    <node x="1518.0" y="97.0">org.springframework.context.ApplicationContextAware</node>
+    <node x="771.0" y="0.0">org.springframework.beans.factory.Aware</node>
+    <node x="1324.0" y="97.0">org.springframework.beans.factory.BeanFactoryAware</node>
+    <node x="420.00000000000006" y="97.0">org.springframework.beans.factory.BeanNameAware</node>
+    <node x="800.0" y="97.0">org.springframework.context.ApplicationEventPublisherAware</node>
+    <node x="590.0" y="97.0">org.springframework.context.MessageSourceAware</node>
+    <node x="1106.0" y="97.0">org.springframework.context.ResourceLoaderAware</node>
+    <node x="226.0" y="97.0">org.springframework.context.EnvironmentAware</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.springframework.beans.factory.BeanClassLoaderAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="103.0" y="47.0" />
+      <point x="776.375" y="47.0" />
+      <point x="-37.625" y="13.5" />
+    </edge>
+    <edge source="org.springframework.beans.factory.BeanNameAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="495.00000000000006" y="67.0" />
+      <point x="797.875" y="67.0" />
+      <point x="-16.125" y="13.5" />
+    </edge>
+    <edge source="org.springframework.context.ApplicationContextAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="1633.0" y="47.0" />
+      <point x="851.625" y="47.0" />
+      <point x="37.625" y="13.5" />
+    </edge>
+    <edge source="org.springframework.context.EnvironmentAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="313.0" y="57.0" />
+      <point x="787.125" y="57.0" />
+      <point x="-26.875" y="13.5" />
+    </edge>
+    <edge source="org.springframework.context.ResourceLoaderAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="1205.0" y="67.0" />
+      <point x="830.125" y="67.0" />
+      <point x="16.125" y="13.5" />
+    </edge>
+    <edge source="org.springframework.context.MessageSourceAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="685.0" y="77.0" />
+      <point x="808.625" y="77.0" />
+      <point x="-5.375" y="13.5" />
+    </edge>
+    <edge source="org.springframework.beans.factory.BeanFactoryAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="1411.0" y="57.0" />
+      <point x="840.875" y="57.0" />
+      <point x="26.875" y="13.5" />
+    </edge>
+    <edge source="org.springframework.context.ApplicationEventPublisherAware" target="org.springframework.beans.factory.Aware">
+      <point x="0.0" y="-13.5" />
+      <point x="943.0" y="77.0" />
+      <point x="819.375" y="77.0" />
+      <point x="5.375" y="13.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="496.5" y="86.5" />
+  <SelectedNodes>
+    <node>org.springframework.context.ApplicationEventPublisherAware</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

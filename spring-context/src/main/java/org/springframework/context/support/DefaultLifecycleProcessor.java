@@ -16,21 +16,8 @@
 
 package org.springframework.context.support;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -42,6 +29,18 @@ import org.springframework.context.Phased;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Default implementation of the {@link LifecycleProcessor} strategy.
@@ -138,7 +137,10 @@ public class DefaultLifecycleProcessor implements LifecycleProcessor, BeanFactor
 	// Internal helpers
 
 	private void startBeans(boolean autoStartupOnly) {
+
+		//获取所有的Lifecycle Bean
 		Map<String, Lifecycle> lifecycleBeans = getLifecycleBeans();
+		//根据phases分组
 		Map<Integer, LifecycleGroup> phases = new HashMap<>();
 		lifecycleBeans.forEach((beanName, bean) -> {
 			if (!autoStartupOnly || (bean instanceof SmartLifecycle && ((SmartLifecycle) bean).isAutoStartup())) {
@@ -151,6 +153,7 @@ public class DefaultLifecycleProcessor implements LifecycleProcessor, BeanFactor
 				group.add(beanName, bean);
 			}
 		});
+		//排序，然后调用start方法
 		if (!phases.isEmpty()) {
 			List<Integer> keys = new ArrayList<>(phases.keySet());
 			Collections.sort(keys);
@@ -276,8 +279,12 @@ public class DefaultLifecycleProcessor implements LifecycleProcessor, BeanFactor
 	 * @return the Map of applicable beans, with bean names as keys and bean instances as values
 	 */
 	protected Map<String, Lifecycle> getLifecycleBeans() {
+
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
+
 		Map<String, Lifecycle> beans = new LinkedHashMap<>();
+
+		//获取所有的LifecycleBean，遍历
 		String[] beanNames = beanFactory.getBeanNamesForType(Lifecycle.class, false, false);
 		for (String beanName : beanNames) {
 			String beanNameToRegister = BeanFactoryUtils.transformedBeanName(beanName);
