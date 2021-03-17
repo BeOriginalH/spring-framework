@@ -17,6 +17,12 @@
 package org.springframework.beans.factory;
 
 /**
+ *
+ * Bean实现该接口后，可以为该bean显示的指定Bean的名称，而不是由Spring自动创建
+ *
+ * 通过实现setBeanName()方法将自定义的名称传入，Spring创建Bean的时候会调用该方法对Bean设置名称
+ *
+ *
  * Interface to be implemented by beans that want to be aware of their
  * bean name in a bean factory. Note that it is not usually recommended
  * that an object depends on its bean name, as this represents a potentially
