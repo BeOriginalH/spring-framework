@@ -73,18 +73,30 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements SingletonBeanRegistry {
 
+	/**
+	 * 存放完全初始化好的Bean,从该缓存中取出的Bean是可以直接使用的，一级缓存
+	 */
 	/** Cache of singleton objects: bean name to bean instance. */
 	private final Map<String, Object> singletonObjects = new ConcurrentHashMap<>(256);
 
+	/**
+	 * 单例对象工厂的cache，存放bean工厂对象，用于解决循环依赖，三级缓存
+	 */
 	/** Cache of singleton factories: bean name to ObjectFactory. */
 	private final Map<String, ObjectFactory<?>> singletonFactories = new HashMap<>(16);
 
+	/**
+	 * 提前曝光的单例对象的cache，存放原始的bean对象，没有进行属性填充，用于解决循环依赖，二级缓存
+	 */
 	/** Cache of early singleton objects: bean name to bean instance. */
 	private final Map<String, Object> earlySingletonObjects = new HashMap<>(16);
 
 	/** Set of registered singletons, containing the bean names in registration order. */
 	private final Set<String> registeredSingletons = new LinkedHashSet<>(256);
 
+	/**
+	 * 缓存正在创建的Bean的名称
+	 */
 	/** Names of beans that are currently in creation. */
 	private final Set<String> singletonsCurrentlyInCreation =
 			Collections.newSetFromMap(new ConcurrentHashMap<>(16));
@@ -177,12 +189,23 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 	 */
 	@Nullable
 	protected Object getSingleton(String beanName, boolean allowEarlyReference) {
+
+		//先从已经初始化好的缓存中查询
 		Object singletonObject = this.singletonObjects.get(beanName);
+
+		//如果一级缓存不存在，并且bean正在创建流程中
 		if (singletonObject == null && isSingletonCurrentlyInCreation(beanName)) {
 			synchronized (this.singletonObjects) {
+
+				//从二级缓存中获取
 				singletonObject = this.earlySingletonObjects.get(beanName);
+
+				//如果还是没有获取到，并且允许提前引用，从三级缓存中查询
 				if (singletonObject == null && allowEarlyReference) {
+
 					ObjectFactory<?> singletonFactory = this.singletonFactories.get(beanName);
+
+					//如果拿到了，创建对象，并且从三级缓存中移动到二级缓存中
 					if (singletonFactory != null) {
 						singletonObject = singletonFactory.getObject();
 						this.earlySingletonObjects.put(beanName, singletonObject);
